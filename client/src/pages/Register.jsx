@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword , updateProfile, getAuth} from "firebase/auth";
 
-export const Register = () => {
+export default function Register() {
   const navigate = useNavigate();
   const [input, setInput] = useState({
     displayName: "",
@@ -47,7 +47,7 @@ export const Register = () => {
             Register
           </h1>
           <p className="text-sm lg:text-lg mb-5 mt-7">
-            <marquee> Enter Your Information Below to Regist</marquee>
+            <marquee> Enter Your Information Below to Register</marquee>
           </p>
           <label className="text-sm lg:text-lg">Full Name :</label>
           <input
