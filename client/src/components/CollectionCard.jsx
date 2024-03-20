@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
 import CommentBox from "./CommentBox";
 import Vote from "./Vote";
@@ -10,6 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function CollectionCard({ picture }) {
   const [comments, setComments] = useState([]);
@@ -37,8 +38,12 @@ export default function CollectionCard({ picture }) {
     return unsubscribe;
   }, []);
 
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
+  const border = theme[currentTheme].border;
+
   return (
-    <div className="group flex h-[52rem] min-h-72 w-[95%] overflow-clip rounded-xl border bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-[48%] lg:max-w-[48%]">
+    <div className={`group flex h-[52rem] min-h-72 w-[95%] overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-[48%] lg:max-w-[48%]`}>
       <div className="relative w-1/2 border-e">
         <div className="absolute hidden h-full w-full items-center justify-center bg-gradient-to-t from-black to-[150%] py-5 group-hover:flex">
           <div className="flex w-4/5 flex-col items-center gap-5">
