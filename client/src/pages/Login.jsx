@@ -12,7 +12,6 @@ export const Login = () => {
       const response = await signInWithGooglePopup();
       const data = response.user;
       const { uid, displayName, email, photoURL } = data;
-      // console.log( uid, displayName, email, photoURL, "<<< RES USER");
 
       const user = await setDoc(
         doc(db, "Users", uid),
@@ -25,7 +24,9 @@ export const Login = () => {
         { merge: true }
       );
 
-      // await setDoc(doc(db, "usersChats", uid), {}, { merge: true });
+      localStorage.uid = data.uid
+      localStorage.displayName = data.displayName
+      localStorage.photoURL = data.photoURL
 
       navigate("/home");
     } catch (error) {
