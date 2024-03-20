@@ -1,9 +1,8 @@
 import { Layout } from "./components";
 import { AuthContext } from "./context/AuthContext";
-import { Register, Login } from "./pages/index";
+import { Register, Login, Home } from "./pages/index";
 import { useContext } from "react";
 
-import { Home,Register, Login } from "./pages"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,20 +12,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
-  if (!currentUser) {
-    return <Navigate to="/login" />;
-  }
-  return <Outlet />;
-};
-
-Layout;
 const router = createBrowserRouter([
-  {
-    path: "*",
-    element: <Navigate to="/home" replace />,
-  },
   {
     path: "/register",
     element: (
@@ -36,34 +22,24 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/login",
-    element: (
-      <>
-        <Login />
-      </>
-    ),
-    // loader: () => {
-    //   if (localStorage.access_token) {
-    //     return redirect("/home");
-    //   }
-    //   return null;
-    // },
-  },
-  {
-    element: (
-      <>
-        <Layout />
-      </>
-    ),
-    // loader: () => {
-    //   if (!localStorage.access_token) {
-    //     return redirect("/login");
-    //   }
-    //   return null;
-    // },
+    element: <Layout />,
+    loader: () => {
+      if (localStorage.access_token) {
+        return null;
+      }
+      return redirect("/login");
+    },
     children: [
       {
         path: "/home",
+        element: (
+          <>
+            <Home />
+          </>
+        ),
+      },
+      {
+        path: "/",
         element: (
           <>
             <Home />
@@ -79,6 +55,16 @@ const router = createBrowserRouter([
         element: <>{/* <MyPosts /> */}</>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    loader: () => {
+      if (localStorage.access_token) {
+        return redirect("/home");
+      }
+      return null;
+    },
   },
   {
     path: "/logout",
