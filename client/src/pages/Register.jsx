@@ -1,24 +1,39 @@
-// import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword , updateProfile, getAuth} from "firebase/auth";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [input, setInput] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+  });
 
-  const handleLogin = async (event) => {
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    const newInput = {
+      ...input,
+    };
+
+    newInput[name] = value;
+    setInput(newInput);
+  };
+
+  const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      const requestBody = { email, password };
-      const response = await axios.post(
-        "http://localhost:3000/register",
-        requestBody
-      );
-      localStorage.setItem("acces_token", response.data.accesToken);
-      navigate("/login");
+      const { email, password, displayName } = input; 
+      console.log(input);
+      const credential = await createUserWithEmailAndPassword(auth, email, password); // Gunakan nilai-nilai dari state input
+      await updateProfile(credential.user, {
+        displayName
+      })
+      // console.log(auth.currentUser)
+      navigate('/login'); 
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +42,7 @@ export default function Register() {
   return (
     <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
       <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
-        <form onSubmit={handleLogin} className="w-3/5 flex flex-col gap-3">
+        <form onSubmit={handleSignUp} className="w-3/5 flex flex-col gap-3">
           <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
             Register
           </h1>
@@ -38,7 +53,8 @@ export default function Register() {
           <input
             className="input input-sm lg:input-md input-bordered w-full"
             type="text"
-            name="fullName"
+            name="displayName"
+            onChange={handleInputChange}
             placeholder="Full Name"
           />
           <label className="text-sm lg:text-lg">Email :</label>
@@ -48,7 +64,7 @@ export default function Register() {
             type="email"
             name="email"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputChange}
           />
           <label className="text-sm lg:text-lg">Password :</label>
           <input
@@ -56,7 +72,7 @@ export default function Register() {
             type="password"
             name="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputChange}
           />
           <button className="btn btn-sm lg:btn-md btn-primary mt-5">
             Sign Up

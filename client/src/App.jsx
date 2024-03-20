@@ -1,4 +1,8 @@
 import { Layout } from "./components";
+import { AuthContext } from "./context/AuthContext";
+import { Register, Login } from "./pages/index";
+import { useContext } from "react";
+
 import { Home,Register, Login } from "./pages"
 import {
   createBrowserRouter,
@@ -8,6 +12,14 @@ import {
   redirect,
   Navigate,
 } from "react-router-dom";
+
+const ProtectedRoute = ({ children }) => {
+  const { currentUser } = useContext(AuthContext);
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+  return <Outlet />;
+};
 
 Layout;
 const router = createBrowserRouter([
