@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { auth, db, signInWithGooglePopup } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { SwalError, SwalSuccess } from "../components/Alert";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,33 +26,33 @@ export default function Login() {
   };
 
   const handleLoginEmail = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
-      const { email, password } = input
-      const credential = await signInWithEmailAndPassword(auth, email, password)
-      const currentUser = credential.user
+      const { email, password } = input;
+      const credential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const currentUser = credential.user;
 
-      localStorage.uid = currentUser.uid,
-      localStorage.displayName = currentUser.displayName,
-      localStorage.photoUrl = "Untitled"
-      localStorage.access_token = currentUser.accessToken
+      (localStorage.uid = currentUser.uid),
+        (localStorage.displayName = currentUser.displayName),
+        (localStorage.photoUrl = "Untitled");
+      localStorage.access_token = currentUser.accessToken;
 
-      navigate("/home")
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   const logGoogleUser = async () => {
     try {
-      const response = await signInWithGooglePopup();
-      const data = response.user;
-      const { uid, displayName, email, photoURL, accessToken } = data;
-      console.log(data);
+      const { user } = await signInWithGooglePopup();
+      const { uid, displayName, email, photoURL, accessToken } = user;
 
-      console.log(photoURL);
-      const user = await setDoc(
+      const addUser = await setDoc(
         doc(db, "Users", uid),
         {
           uid,
@@ -62,26 +63,29 @@ export default function Login() {
         { merge: true },
       );
 
-      localStorage.uid = data.uid
-      localStorage.displayName = data.displayName
-      localStorage.photoURL = data.photoURL
-      localStorage.access_token = data.accessToken
+      localStorage.uid = uid;
+      localStorage.displayName = displayName;
+      localStorage.photoURL = photoURL;
+      localStorage.access_token = accessToken;
 
-      console.log(data, "<<< DATA");
+      console.log(user, "<<< DATA");
+      SwalSuccess("Login successful", `Welcome ${displayName}`)
       navigate("/home");
     } catch (error) {
-      console.error(error);
+      SwalError(error);
     }
   };
 
   return (
     <>
-     <main className="flex min-h-screen flex-col md:grid md:grid-cols-2">
-       <section className=" flex h-screen flex-col items-center justify-center bg-gray-800 text-white md:col-span-1">
-          <form onSubmit={handleLoginEmail} className="w-3/5 flex flex-col gap-3">
-            <div className="text-3xl md:text-md lg:text-4xl text-center"></div>
-            <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
-
+      <main className="flex min-h-screen flex-col md:grid md:grid-cols-2">
+        <section className=" flex h-screen flex-col items-center justify-center bg-gray-800 text-white md:col-span-1">
+          <form
+            onSubmit={handleLoginEmail}
+            className="flex w-3/5 flex-col gap-3"
+          >
+            <div className="md:text-md text-center text-3xl lg:text-4xl"></div>
+            <h1 className="md:text-md text-center text-3xl lg:font-serif lg:text-5xl">
               Login
             </h1>
             <p className="mb-5 mt-7 text-sm lg:text-lg">
