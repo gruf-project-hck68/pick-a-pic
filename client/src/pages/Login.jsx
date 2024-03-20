@@ -34,6 +34,7 @@ export const Login = () => {
       localStorage.uid = currentUser.uid,
       localStorage.displayName = currentUser.displayName,
       localStorage.photoUrl = "Untitled"
+      localStorage.access_token = currentUser.accessToken
 
       navigate("/home")
     } catch (error) {
@@ -62,7 +63,9 @@ export const Login = () => {
       localStorage.uid = data.uid
       localStorage.displayName = data.displayName
       localStorage.photoURL = data.photoURL
+      localStorage.access_token = data.accessToken
 
+      console.log(data, "<<< DATA");
       navigate("/home");
     } catch (error) {
       console.error(error);
