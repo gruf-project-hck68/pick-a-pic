@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 
 
 const NavbarStart = () => {
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const text = theme[currentTheme].text;
   return (
     <>
       <div className="navbar-start">
@@ -38,7 +41,7 @@ const NavbarStart = () => {
             </li>
           </ul>
         </div>
-        <Link to={"/home"} className="font-poppins text-2xl font-semibold text-info lg:ms-5">
+        <Link to={"/home"} className={`font-poppins text-2xl font-semibold ${text} lg:ms-5`}>
           Pick a pict
         </Link>
       </div>
@@ -77,19 +80,36 @@ const NavbarCenter = () => {
 };
 
 const NavbarEnd = () => {
-  console.log(localStorage.photoURL.split("=")[0]);
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const text = theme[currentTheme].text;
+  const bgColor = theme[currentTheme].bgColor;
   return (
     <>
+      <label className="relative inline-flex cursor-pointer items-center">
+        <input
+          type="checkbox"
+          defaultValue=""
+          defaultChecked=""
+          className="peer sr-only"
+          onChange={() => {
+            setCurrentTheme(currentTheme === "dark" ? "light" : "dark");
+          }}
+        />
+        <div className="after: peer flex h-8 items-center gap-4 rounded-full bg-orange-600 px-3 text-sm text-white after:absolute after:left-1 after:h-6 after:w-12 after:rounded-full after:bg-white/40 after:transition-all after:content-[''] peer-checked:bg-stone-600 peer-checked:after:translate-x-full peer-focus:outline-none dark:border-slate-600 dark:bg-slate-700">
+          <span>Dark</span>
+          <span>Light</span>
+        </div>
+      </label>
       <div className="navbar-end flex gap-5">
         <Link
           to="/collections"
-          className="hidden font-poppins text-xl font-semibold text-info md:block"
+          className={`hidden font-poppins text-xl font-semibold ${text} md:block`}
         >
           Collection
         </Link>
         <Link
           to="/my-collections"
-          className="hidden font-poppins text-xl font-semibold text-info md:block"
+          className={`hidden font-poppins text-xl font-semibold ${text} md:block`}
         >
           My Collection
         </Link>
@@ -109,24 +129,24 @@ const NavbarEnd = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
+            className={`menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box ${bgColor} p-2 shadow`}
           >
             <li>
               <Link
                 to="/my-profile"
-                className="justify-between font-poppins text-lg text-info"
+                className={`justify-between font-poppins text-lg ${text}`}
               >
                 Profile
                 {/* <span className="badge">New</span> */}
               </Link>
             </li>
             <li>
-              <Link to="/settings" className="font-poppins text-lg text-info">
+              <Link to="/settings" className={`font-poppins text-lg ${text}`}>
                 Settings
               </Link>
             </li>
             <li>
-              <Link to="/logout" className="font-poppins text-lg text-info">
+              <Link to="/logout" className={`font-poppins text-lg ${text}`}>
                 Logout
               </Link>
             </li>
@@ -138,8 +158,13 @@ const NavbarEnd = () => {
 };
 
 export default function Navbar() {
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
+  const navBorder = theme[currentTheme].navBorder;
   return (
-    <div className="navbar sticky top-0 z-10 border-b border-primary bg-base-100">
+    <div
+      className={`navbar sticky top-0 z-10 border-b ${navBorder} ${bgColor}`}
+    >
       <NavbarStart />
       {/* <NavbarCenter /> */}
       <NavbarEnd />

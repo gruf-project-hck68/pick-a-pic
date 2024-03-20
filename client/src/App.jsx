@@ -1,5 +1,6 @@
 import { Layout } from "./components";
 import { Home, Register, Login, Collection, MyCollection } from "./pages";
+import ThemeProvider from "./context/ThemeContext.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -10,12 +11,7 @@ import {
 } from "react-router-dom";
 MyCollection;
 
-Layout;
 const router = createBrowserRouter([
-  {
-    path: "*",
-    element: <Navigate to="/home" replace />,
-  },
   {
     path: "/register",
     element: <Register />,
@@ -32,13 +28,12 @@ const router = createBrowserRouter([
   },
   {
     element: <Layout />,
-
-    // loader: () => {
-    //   if (!localStorage.access_token) {
-    //     return redirect("/login");
-    //   }
-    //   return null;
-    // },
+    loader: () => {
+      if (localStorage.access_token) {
+        return null;
+      }
+      return redirect("/login");
+    },
     children: [
       {
         path: "/home",
@@ -55,6 +50,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/login",
+    element: <Login />,
+    loader: () => {
+      if (localStorage.access_token) {
+        return redirect("/home");
+      }
+      return null;
+    },
+  },
+  {
     path: "/logout",
     loader: () => {
       localStorage.clear();
@@ -66,7 +71,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+      ,
     </>
   );
 }

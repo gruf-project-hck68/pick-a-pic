@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchPexelAPI } from "../utils";
 import { SwalError } from "../components/Alert";
 import { Card } from "../components";
-// import { collection, onSnapshot, addDoc, getDocs } from "firebase/firestore";
-// import { db } from "../firebase";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Home() {
   const [ip, setIp] = useState([]);
   const [initPage, setInitPage] = useState(1);
+
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
 
   const fetchPictures = async (initPage) => {
     try {
@@ -16,7 +18,7 @@ export default function Home() {
         initPage,
         50,
       );
-      console.log(photos);
+      // console.log(photos);
       setIp((prevIp) => [...prevIp, ...photos]);
     } catch (error) {
       SwalError(error);
@@ -46,7 +48,7 @@ export default function Home() {
 
   return (
     <InfiniteScroll
-      className="flex flex-wrap justify-center gap-5 p-3 lg:justify-evenly"
+      className={`${bgColor} flex flex-wrap justify-center gap-5 p-3 lg:justify-evenly`}
       dataLength={ip.length}
       next={loadPicture}
       hasMore={true}

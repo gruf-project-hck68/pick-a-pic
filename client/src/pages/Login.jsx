@@ -2,11 +2,47 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { db, signInWithGooglePopup } from "../firebase";
+import { auth, db, signInWithGooglePopup } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    const newInput = {
+      ...input,
+    };
+
+    newInput[name] = value;
+    setInput(newInput);
+  };
+
+  const handleLoginEmail = async (event) => {
+    event.preventDefault()
+    try {
+      const { email, password } = input
+      const credential = await signInWithEmailAndPassword(auth, email, password)
+      const currentUser = credential.user
+
+      localStorage.uid = currentUser.uid,
+      localStorage.displayName = currentUser.displayName,
+      localStorage.photoUrl = "Untitled"
+      localStorage.access_token = currentUser.accessToken
+
+      navigate("/home")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const logGoogleUser = async () => {
     try {
       const response = await signInWithGooglePopup();
@@ -24,9 +60,12 @@ export default function Login() {
         { merge: true },
       );
 
-      localStorage.uid = uid;
-      localStorage.displayName = displayName;
-      localStorage.photoURL = photoURL;
+      localStorage.uid = data.uid
+      localStorage.displayName = data.displayName
+      localStorage.photoURL = data.photoURL
+      localStorage.access_token = data.accessToken
+
+      console.log(data, "<<< DATA");
       navigate("/home");
     } catch (error) {
       console.error(error);
@@ -35,11 +74,12 @@ export default function Login() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col md:grid md:grid-cols-2">
-        <section className=" flex h-screen flex-col items-center justify-center bg-gray-800 text-white md:col-span-1">
-          <form className="flex w-3/5 flex-col gap-3">
-            <div className="md:text-md text-center text-3xl lg:text-4xl"></div>
-            <h1 className="md:text-md text-center text-3xl lg:font-serif lg:text-5xl">
+     <main className="flex min-h-screen flex-col md:grid md:grid-cols-2">
+       <section className=" flex h-screen flex-col items-center justify-center bg-gray-800 text-white md:col-span-1">
+          <form onSubmit={handleLoginEmail} className="w-3/5 flex flex-col gap-3">
+            <div className="text-3xl md:text-md lg:text-4xl text-center"></div>
+            <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
+
               Login
             </h1>
             <p className="mb-5 mt-7 text-sm lg:text-lg">
@@ -52,7 +92,7 @@ export default function Login() {
               type="email"
               name="email"
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleInputChange}
             />
             <label className="text-sm lg:text-lg">Password :</label>
             <input
@@ -60,7 +100,7 @@ export default function Login() {
               type="password"
               name="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputChange}
             />
             <p className="lg:text-md text-end text-sm lg:hover:text-blue-500 lg:hover:underline">
               Forgot password?
