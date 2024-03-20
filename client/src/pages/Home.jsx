@@ -18,7 +18,7 @@ export default function Home() {
         initPage,
         50,
       );
-      // console.log(photos);
+      
       setIp((prevIp) => [...prevIp, ...photos]);
     } catch (error) {
       SwalError(error);

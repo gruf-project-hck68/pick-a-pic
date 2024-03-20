@@ -19,12 +19,12 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-    // loader: () => {
-    //   if (localStorage.access_token) {
-    //     return redirect("/home");
-    //   }
-    //   return null;
-    // },
+    loader: () => {
+      if (localStorage.access_token) {
+        return redirect("/home");
+      }
+      return null;
+    },
   },
   {
     element: <Layout />,

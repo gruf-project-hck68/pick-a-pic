@@ -24,7 +24,6 @@ export default function Card({ picture }) {
   } = picture;
 
 
-// console.log(auth());
 
   const [input, setInput] = useState({
     user: "/Users/" + localStorage.uid,
@@ -32,6 +31,9 @@ export default function Card({ picture }) {
     title: "",
     content: "",
     imageUrl: src.portrait,
+    comment:[],
+    upVote:[],
+    downVote:[]
   });
 
   const addToCollection = async (e) => {
@@ -43,6 +45,7 @@ export default function Card({ picture }) {
       if (input.title == "") throw { name: "noTitle" };
 
       if (input.content == "") throw { name: "noContent" };
+
       const querySnapshot = await getDocs(collection(db, "Posts"));
       querySnapshot.forEach((doc) => {
         const docData = doc.data()
