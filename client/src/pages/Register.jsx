@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -27,11 +28,11 @@ export default function Register() {
     <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
       <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
         <form onSubmit={handleLogin} className="w-3/5 flex flex-col gap-3">
-          <h1 className="text-3xl md:text-md lg:text-4xl text-center">
+          <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
             Register
           </h1>
-          <p className="text-sm lg:text-lg mb-5">
-            <marquee> Enter your information below to register</marquee>
+          <p className="text-sm lg:text-lg mb-5 mt-7">
+            <marquee> Enter Your Information Below to Register</marquee>
           </p>
           <label className="text-sm lg:text-lg">Full Name :</label>
           <input
@@ -57,21 +58,21 @@ export default function Register() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p className="text-sm lg:text-lg text-end">Forgot password?</p>
           <button className="btn btn-sm lg:btn-md btn-primary mt-5">
-            Submit
+            Sign Up
           </button>
-          <div className="divider text-sm lg:text-lg">or continue with</div>
         </form>
-        <div className="mt-10">
+        <div className="mt-4">
           <p className="text-start text-sm lg:text-lg">
             Have an account?{" "}
-            <a
-              //   to="/login"
-              className="text-primary link-hover text-sm lg:text-lg "
-            >
-              Login
-            </a>
+            <Link to={"/login"}>
+              <button
+                //   to="/login"
+                className="text-primary link-hover text-sm lg:text-lg "
+              >
+                Login
+              </button>
+            </Link>
           </p>
         </div>
       </section>
@@ -123,4 +124,4 @@ export default function Register() {
       </section>
     </main>
   );
-}
+};
