@@ -25,8 +25,6 @@ export const Login = () => {
         { merge: true }
       );
 
-      // await setDoc(doc(db, "usersChats", uid), {}, { merge: true });
-
       navigate("/home");
     } catch (error) {
       console.error(error);

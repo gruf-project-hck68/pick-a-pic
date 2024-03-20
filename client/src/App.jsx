@@ -1,6 +1,5 @@
 import { Layout } from "./components";
-import { Register, Login } from "./pages/index";
-
+import { Home,Register, Login } from "./pages"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -53,7 +52,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/home",
-        element: <>{/* <Home /> */}</>,
+        element: (
+          <>
+            <Home />
+          </>
+        ),
       },
       {
         path: "/posts",
