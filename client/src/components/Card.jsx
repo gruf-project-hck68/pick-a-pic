@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
 import {
   collection,
@@ -7,6 +7,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { ThemeContext } from "../context/ThemeContext";
 
 // Vertical
 export default function Card({ picture }) {
@@ -48,9 +49,13 @@ export default function Card({ picture }) {
     setInput({ ...input, [name]: value });
   };
 
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
+  const border = theme[currentTheme].border;
+
   return (
     <>
-      <div className="group card max-h-[50rem] overflow-clip border bg-base-100 shadow-xl lg:card-side sm:max-w-[48%] md:max-w-[31%] xl:max-w-[23%]">
+      <div className={`group card max-h-[50rem] overflow-clip border ${border} shadow-xl lg:card-side sm:max-w-[48%] md:max-w-[31%] xl:max-w-[23%]`}>
         <div className="w-full">
           <img className="w-full" src={src.portrait} alt="" />
         </div>
