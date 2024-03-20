@@ -1,13 +1,11 @@
-// import React from "react";
-
-export const Register = () => {
+export default function Register() {
   return (
-    // <div>Register</div>
-
     <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
       <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
         <form className="w-3/5 flex flex-col gap-3">
-          <h1 className="text-3xl md:text-md lg:text-4xl text-center">Register</h1>
+          <h1 className="text-3xl md:text-md lg:text-4xl text-center">
+            Register
+          </h1>
           <p className="text-sm lg:text-lg mb-5">
             Enter your information below to register
           </p>
@@ -101,4 +99,4 @@ export const Register = () => {
       </section>
     </main>
   );
-};
+}
