@@ -4,21 +4,24 @@ import { fetchPexelAPI } from "../utils";
 import { SwalError } from "../components/Alert";
 import { Card } from "../components";
 import { ThemeContext } from "../context/ThemeContext";
+import randomizer from "../utils/randomizer";
 
 export default function Home() {
+  const randomPage = randomizer(1, 50);
   const [ip, setIp] = useState([]);
-  const [initPage, setInitPage] = useState(1);
+  const [initPage, setInitPage] = useState(randomPage);
 
   const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
   const bgColor = theme[currentTheme].bgColor;
 
   const fetchPictures = async (initPage) => {
     try {
+      console.log("PAGE: " + initPage);
       const { next_page, page, per_page, photos } = await fetchPexelAPI(
         initPage,
         50,
       );
-      
+
       setIp((prevIp) => [...prevIp, ...photos]);
     } catch (error) {
       SwalError(error);
@@ -42,8 +45,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchPictures();
-    getUser()
+    fetchPictures(initPage);
+    getUser();
   }, []);
 
   return (
