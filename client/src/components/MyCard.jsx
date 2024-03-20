@@ -1,3 +1,4 @@
+//
 import React, { useContext } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -27,6 +28,39 @@ export default function MyCard({ picture, updatePictures }) {
   const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
   const bgColor = theme[currentTheme].bgColor;
   const border = theme[currentTheme].border;
+//
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
+import CommentBox from "./CommentBox";
+
+export default function MyCard({ picture }) {
+  const [comments, setComments] = useState([]);
+  const { id, imageUrl, pexelId, title, content, Comments } = picture;
+
+  const fetchComments = () => {
+    const q = query(
+      collection(db, "Comments"),
+      where("postId", "==", "/Posts/" + id),
+      orderBy("createdAt", "desc"),
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const commentsArray = [];
+      querySnapshot.forEach((doc) => {
+        commentsArray.push(doc.data());
+      });
+      setComments(commentsArray);
+    });
+
+    return () => unsubscribe();
+  };
+
+  useEffect(() => {
+    const unsubscribe = fetchComments();
+    return unsubscribe;
+  }, []);
+
+//
 
   return (
     <div className={`group flex h-[36rem] min-h-72 w-4/5 overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-1/2 lg:max-w-[40%]`}>
@@ -56,16 +90,16 @@ export default function MyCard({ picture, updatePictures }) {
             Comment
           </p>
           <div className="overflow-clip text-pretty hover:overflow-auto">
-            {/* {Comments?.map((el, index) => {
+            {comments?.map((el, index) => {
             return (
               <p className="my-2 line-clamp-2 hover:line-clamp-none" key={index}>
                 {el.comment}
               </p>
             );
-          })} */}
+          })}
           </div>
         </div>
-        {/* <CommentBox id={id} fetchMyPictures={fetchMyPictures} /> */}
+        <CommentBox id={id}/>
       </div>
     </div>
   );
