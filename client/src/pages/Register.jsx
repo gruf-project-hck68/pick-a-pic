@@ -1,37 +1,37 @@
 // import React from "react";
 import { useNavigate } from "react-router-dom";
-// import "./App.css";
 import { useState } from "react";
 import axios from "axios";
 
-export const Register = () => {
+export default function Register() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-      const navigate = useNavigate();
-      const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
-    
-      const handleLogin = async (event) => {
-        event.preventDefault();
-        try {
-          const requestBody = { email, password };
-          const response = await axios.post(
-            "http://localhost:3000/register",
-            requestBody
-          );
-          localStorage.setItem("acces_token", response.data.accesToken);
-          navigate("/login");
-        } catch (error) {
-          console.log(error);
-        }
-      };
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const requestBody = { email, password };
+      const response = await axios.post(
+        "http://localhost:3000/register",
+        requestBody
+      );
+      localStorage.setItem("acces_token", response.data.accesToken);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
       <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
         <form onSubmit={handleLogin} className="w-3/5 flex flex-col gap-3">
-          <h1 className="text-3xl md:text-md lg:text-4xl text-center">Register</h1>
+          <h1 className="text-3xl md:text-md lg:text-4xl text-center">
+            Register
+          </h1>
           <p className="text-sm lg:text-lg mb-5">
-           <marquee> Enter your information below to register</marquee>
+            <marquee> Enter your information below to register</marquee>
           </p>
           <label className="text-sm lg:text-lg">Full Name :</label>
           <input

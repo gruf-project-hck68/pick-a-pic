@@ -1,5 +1,6 @@
 import { Layout } from "./components";
-import { Register } from "./pages"
+import { Home, Register } from "./pages"
+
 
 import {
   createBrowserRouter,
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
         path: "/home",
         element: (
           <>
-            {/* <Home /> */}
+            <Home />
           </>
         ),
       },

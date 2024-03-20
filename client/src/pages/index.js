@@ -1,3 +1,4 @@
-import Register  from "./Register";
+import Home from "./Home";
+import Register from "./Register";
 
-export { Register }
+export { Register,Home }

@@ -5,12 +5,6 @@ import { useNavigate } from "react-router-dom";
     import axios from "axios";
 
 export const Login = () => {
-
-
-
-    
-    
-    
       const navigate = useNavigate();
     
       const [email, setEmail] = useState("");

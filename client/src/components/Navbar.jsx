@@ -24,25 +24,19 @@ const NavbarStart = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
           >
             <li>
-              <li>
-                <Link className="font-poppins text-lg text-info">
-                  Collection
-                </Link>
-              </li>
+              <Link className="font-poppins text-lg text-info">Collection</Link>
             </li>
             <li>
-              <li>
-                <Link className="font-poppins text-lg text-info">
-                  My Collection
-                </Link>
-              </li>
+              <Link className="font-poppins text-lg text-info">
+                My Collection
+              </Link>
             </li>
           </ul>
         </div>
-        <Link className="font-poppins text-2xl text-info font-semibold lg:ms-5">
+        <Link className="font-poppins text-2xl font-semibold text-info lg:ms-5">
           Pick a pict
         </Link>
       </div>
@@ -84,17 +78,23 @@ const NavbarEnd = () => {
   return (
     <>
       <div className="navbar-end flex gap-5">
-        <Link to="/collections" className="hidden md:block font-poppins text-xl text-info font-semibold">
+        <Link
+          to="/collections"
+          className="hidden font-poppins text-xl font-semibold text-info md:block"
+        >
           Collection
         </Link>
-        <Link to="/my-collections" className="hidden md:block font-poppins text-xl text-info font-semibold">
+        <Link
+          to="/my-collections"
+          className="hidden font-poppins text-xl font-semibold text-info md:block"
+        >
           My Collection
         </Link>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar me-3 lg:me-5 object-cover"
+            className="avatar btn btn-circle btn-ghost me-3 object-cover lg:me-5"
           >
             <div className="w-12 rounded-full">
               <img
@@ -106,19 +106,26 @@ const NavbarEnd = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
           >
             <li>
-              <Link to="/my-profile" className="justify-between text-lg font-poppins text-info">
+              <Link
+                to="/my-profile"
+                className="justify-between font-poppins text-lg text-info"
+              >
                 Profile
                 {/* <span className="badge">New</span> */}
               </Link>
             </li>
             <li>
-              <Link to="/settings" className="font-poppins text-lg text-info">Settings</Link>
+              <Link to="/settings" className="font-poppins text-lg text-info">
+                Settings
+              </Link>
             </li>
             <li>
-              <Link to="/logout" className="font-poppins text-lg text-info">Logout</Link>
+              <Link to="/logout" className="font-poppins text-lg text-info">
+                Logout
+              </Link>
             </li>
           </ul>
         </div>
@@ -129,7 +136,7 @@ const NavbarEnd = () => {
 
 export default function Navbar() {
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-10 border-b border-primary">
+    <div className="navbar sticky top-0 z-10 border-b border-primary bg-base-100">
       <NavbarStart />
       {/* <NavbarCenter /> */}
       <NavbarEnd />
