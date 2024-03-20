@@ -2,12 +2,14 @@ import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 
+
 const NavbarStart = () => {
   const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
   const text = theme[currentTheme].text;
   return (
     <>
       <div className="navbar-start">
+
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -30,16 +32,16 @@ const NavbarStart = () => {
             className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
           >
             <li>
-              <Link className="font-poppins text-lg text-info">Collection</Link>
+              <Link to={"/collections"} className="font-poppins text-lg text-info">Collection</Link>
             </li>
             <li>
-              <Link className="font-poppins text-lg text-info">
+              <Link to="/my-collections" className="font-poppins text-lg text-info">
                 My Collection
               </Link>
             </li>
           </ul>
         </div>
-        <Link className={`font-poppins text-2xl font-semibold ${text} lg:ms-5`}>
+        <Link to={"/home"} className={`font-poppins text-2xl font-semibold ${text} lg:ms-5`}>
           Pick a pict
         </Link>
       </div>
@@ -81,7 +83,6 @@ const NavbarEnd = () => {
   const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
   const text = theme[currentTheme].text;
   const bgColor = theme[currentTheme].bgColor;
-
   return (
     <>
       <label className="relative inline-flex cursor-pointer items-center">
@@ -121,8 +122,8 @@ const NavbarEnd = () => {
             <div className="w-12 rounded-full">
               <img
                 className="w-12 object-cover"
-                alt="Tailwind CSS Navbar component"
-                src="https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg"
+                alt={localStorage.displayName ? localStorage.displayName : "NoName"}
+                src={localStorage.photoURL ? localStorage.photoURL.split("=")[0] + "photo.jpg" : "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg"}
               />
             </div>
           </div>
