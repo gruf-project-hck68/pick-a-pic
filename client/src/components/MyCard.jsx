@@ -1,3 +1,34 @@
+//
+import React, { useContext } from "react";
+import { SwalError, SwalSuccess } from "./Alert";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
+import Swal from "sweetalert2";
+import { ThemeContext } from "../context/ThemeContext";
+
+
+export default function MyCard({ picture, updatePictures }) {
+  const { id, imageUrl, pexelId, title, content, Comments } = picture;
+  // console.log(picture, "<< INI PICTURE");
+  const handleDelete = async () => {
+    try {
+      console.log(title, "<< title");
+      await deleteDoc(doc(db, "Posts", id)); 
+      updatePictures;
+      SwalSuccess(
+        "Success Delete",
+        `${title} Has Been Deleted From Your Collection`,
+      );
+    } catch (error) {
+      console.log(error, "<<<< ERR");
+      SwalError(error);
+    }
+  };
+
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
+  const border = theme[currentTheme].border;
+//
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -29,9 +60,10 @@ export default function MyCard({ picture }) {
     return unsubscribe;
   }, []);
 
+//
 
   return (
-    <div className="group flex h-[36rem] min-h-72 w-4/5 overflow-clip rounded-xl border bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-1/2 lg:max-w-[40%]">
+    <div className={`group flex h-[36rem] min-h-72 w-4/5 overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-1/2 lg:max-w-[40%]`}>
       <div className="relative w-1/2 border-e">
         <div className="absolute hidden h-full w-full items-center justify-center bg-gradient-to-t from-black from-[-70%] to-[150%] py-5 group-hover:flex">
           <div className="flex w-4/5 flex-col items-center gap-5">
@@ -45,7 +77,7 @@ export default function MyCard({ picture }) {
         >
           <button
             className="btn btn-warning z-50 hidden group-hover:flex"
-            // onClick={handleDelete}
+            onClick={handleDelete}
           >
             Delete
           </button>

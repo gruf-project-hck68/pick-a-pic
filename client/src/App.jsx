@@ -36,6 +36,10 @@ const router = createBrowserRouter([
     },
     children: [
       {
+        path: "/",
+        element: <Home />,
+      },
+      {
         path: "/home",
         element: <Home />,
       },
@@ -74,7 +78,6 @@ function App() {
       <ThemeProvider>
         <RouterProvider router={router} />
       </ThemeProvider>
-      ,
     </>
   );
 }

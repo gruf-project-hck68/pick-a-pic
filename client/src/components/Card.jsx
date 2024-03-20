@@ -73,7 +73,10 @@ export default function Card({ picture }) {
       console.log(usersCollectionRef == usersCollectionRef1);
       const docRef = await addDoc(collection(db, "Posts"), input);
 
+      input.id = docRef.id;
+
       console.log("Document written with ID: ", docRef.id);
+      SwalSuccess("Added", "Succes Add This Pict to Your Collection")
     } catch (e) {
       SwalError(e);
     }
