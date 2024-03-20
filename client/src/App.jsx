@@ -84,7 +84,7 @@ const router = createBrowserRouter([
       return redirect("/login");
     },
   },
-]);
+])
 
 function App() {
   return (
