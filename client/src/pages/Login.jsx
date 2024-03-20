@@ -2,11 +2,46 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { db, signInWithGooglePopup } from "../firebase";
+import { auth, db, signInWithGooglePopup } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    const newInput = {
+      ...input,
+    };
+
+    newInput[name] = value;
+    setInput(newInput);
+  };
+
+  const handleLoginEmail = async (event) => {
+    event.preventDefault()
+    try {
+      const { email, password } = input
+      const credential = await signInWithEmailAndPassword(auth, email, password)
+      const currentUser = credential.user
+
+      localStorage.uid = currentUser.uid,
+      localStorage.displayName = currentUser.displayName,
+      localStorage.photoUrl = "Untitled"
+
+      navigate("/home")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const logGoogleUser = async () => {
     try {
       const response = await signInWithGooglePopup();
@@ -25,8 +60,6 @@ export const Login = () => {
         { merge: true }
       );
 
-      // await setDoc(doc(db, "usersChats", uid), {}, { merge: true });
-
       navigate("/home");
     } catch (error) {
       console.error(error);
@@ -37,7 +70,7 @@ export const Login = () => {
     <>
       <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
         <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
-          <form className="w-3/5 flex flex-col gap-3">
+          <form onSubmit={handleLoginEmail} className="w-3/5 flex flex-col gap-3">
             <div className="text-3xl md:text-md lg:text-4xl text-center"></div>
             <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
               Login
@@ -52,7 +85,7 @@ export const Login = () => {
               type="email"
               name="email"
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleInputChange}
             />
             <label className="text-sm lg:text-lg">Password :</label>
             <input
@@ -60,7 +93,7 @@ export const Login = () => {
               type="password"
               name="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputChange}
             />
             <p className="text-sm lg:text-md lg:hover:text-blue-500 lg:hover:underline text-end">
               Forgot password?
