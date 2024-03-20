@@ -1,5 +1,5 @@
 import { Layout } from "./components";
-import { Register } from "./pages"
+import { Register, Login } from "./pages/index";
 
 import {
   createBrowserRouter,
@@ -10,25 +10,25 @@ import {
   Navigate,
 } from "react-router-dom";
 
-Layout
+Layout;
 const router = createBrowserRouter([
   {
-    path:"*",
+    path: "*",
     element: <Navigate to="/home" replace />,
   },
   {
     path: "/register",
     element: (
       <>
-         <Register />
+        <Register />
       </>
     ),
   },
   {
     path: "/login",
     element: (
-      <><p>LOGIN</p>
-        {/* <Login /> */}
+      <>
+        <Login />
       </>
     ),
     // loader: () => {
@@ -53,27 +53,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/home",
-        element: (
-          <>
-            {/* <Home /> */}
-          </>
-        ),
+        element: <>{/* <Home /> */}</>,
       },
       {
         path: "/posts",
-        element: (
-          <>
-            {/* <Posts /> */}
-          </>
-        ),
+        element: <>{/* <Posts /> */}</>,
       },
       {
         path: "/my-posts",
-        element: (
-          <>
-            {/* <MyPosts /> */}
-          </>
-        ),
+        element: <>{/* <MyPosts /> */}</>,
       },
     ],
   },
@@ -84,12 +72,12 @@ const router = createBrowserRouter([
       return redirect("/login");
     },
   },
-])
+]);
 
 function App() {
   return (
     <>
-      <RouterProvider router={router} />      
+      <RouterProvider router={router} />
     </>
   );
 }
