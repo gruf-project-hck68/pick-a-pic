@@ -1,4 +1,6 @@
-import { Register } from "./pages/Register";
+import { Layout } from "./components";
+import { Register } from "./pages"
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,6 +10,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
+Layout
 const router = createBrowserRouter([
   {
     path:"*",
@@ -38,7 +41,7 @@ const router = createBrowserRouter([
   {
     element: (
       <>
-        {/* <Layout /> */}
+        <Layout />
       </>
     ),
     // loader: () => {
