@@ -1,7 +1,7 @@
 import { Layout } from "./components";
-import { AuthContext } from "./context/AuthContext";
 import { Register, Login, Home } from "./pages/index";
-import { useContext } from "react";
+import ThemeProvider from "./context/ThemeContext.jsx";
+
 
 import {
   createBrowserRouter,
@@ -78,7 +78,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+      ,
     </>
   );
 }
