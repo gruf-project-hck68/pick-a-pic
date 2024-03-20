@@ -47,8 +47,10 @@ export default function Login() {
     try {
       const response = await signInWithGooglePopup();
       const data = response.user;
-      const { uid, displayName, email, photoURL } = data;
+      const { uid, displayName, email, photoURL, accessToken } = data;
+      console.log(data);
 
+      console.log(photoURL);
       const user = await setDoc(
         doc(db, "Users", uid),
         {
