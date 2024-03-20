@@ -3,14 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { db, signInWithGooglePopup } from "../firebase";
-import { setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 export const Login = () => {
   const navigate = useNavigate();
   const logGoogleUser = async () => {
     try {
       const response = await signInWithGooglePopup();
-      const { uid, displayName, email } = response.user;
+      const data = response.user;
+      const { uid, displayName, email, photoURL } = data;
+      // console.log( uid, displayName, email, photoURL, "<<< RES USER");
 
       const user = await setDoc(
         doc(db, "Users", uid),
@@ -18,6 +20,7 @@ export const Login = () => {
           uid,
           displayName,
           email,
+          photoURL
         },
         { merge: true }
       );
