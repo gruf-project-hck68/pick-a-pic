@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
-import {
-  collection,
-  getFirestore,
-  onSnapshot,
-  addDoc,
-} from "firebase/firestore";
-import { db } from "../../firebase";
+import { collection, onSnapshot, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 
 // Vertical
 export default function Card({ picture }) {
@@ -19,7 +14,11 @@ export default function Card({ picture }) {
     src,
   } = picture;
 
+
+// console.log(auth());
+
   const [input, setInput] = useState({
+    user: "/Users/" + localStorage.uid,
     pexelId,
     title: "",
     content: "",
@@ -29,12 +28,37 @@ export default function Card({ picture }) {
   const addToCollection = async (e) => {
     e.preventDefault();
     try {
+      console.log(input);
       if (input.pexelId == "" || input.pexelId == 0) throw { name: "noImage" };
 
       if (input.title == "") throw { name: "noTitle" };
-      
-      if (input.content == "") throw { name: "noContent" };
 
+      if (input.content == "") throw { name: "noContent" };
+      const querySnapshot = await getDocs(collection(db, "Posts"));
+      querySnapshot.forEach((doc) => {
+        const docData = doc.data()
+        if (docData.pexelId === input.pexelId && '/Users/'+localStorage.uid === docData.user) {
+          throw {name: 'DuplicateImage'}
+        }
+        console.log(doc.id, " => ", doc.data());
+      });
+      // const docRefGet = doc(db, "Posts", "ID3ZM6lVH6XI5kjIDeZ4");
+      // const docSnap = await getDoc(docRefGet);
+
+      // if (docSnap.exists()) {
+        
+      //   console.log("Document data:", docSnap.data());
+      // } else {
+      //   // docSnap.data() will be undefined in this case
+      //   console.log("No such document!");
+      // }
+      const usersCollectionRef = doc(db, 'Users', localStorage.displayName);
+      const usersCollectionRef1 = doc(db, 'Users', localStorage.uid);
+      const usersCollectionRef2 = collection(db, 'Users');
+
+      console.log(usersCollectionRef);
+      console.log(usersCollectionRef1);
+      console.log(usersCollectionRef == usersCollectionRef1);
       const docRef = await addDoc(collection(db, "Posts"), input);
 
       console.log("Document written with ID: ", docRef.id);

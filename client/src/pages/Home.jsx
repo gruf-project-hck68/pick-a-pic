@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { initializeApp } from "firebase/app";
-
 import { fetchPexelAPI } from "../utils";
 import { SwalError } from "../components/Alert";
 import { Card } from "../components";
+// import { collection, onSnapshot, addDoc, getDocs } from "firebase/firestore";
+// import { db } from "../firebase";
 
 export default function Home() {
   const [ip, setIp] = useState([]);
@@ -23,6 +23,17 @@ export default function Home() {
     }
   };
 
+  const getUser = async () => {
+    try {
+      // const targetDocRef = await getDocs(collection(db, "Users"));
+      // targetDocRef.forEach((doc) => {
+      //   console.log(`${doc.id} => ${doc.data()}`);
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loadPicture = () => {
     setInitPage((prev) => prev + 1);
     fetchPictures(initPage);
@@ -30,6 +41,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPictures();
+    getUser()
   }, []);
 
   return (

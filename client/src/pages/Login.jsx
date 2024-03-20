@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 import { db, signInWithGooglePopup } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-export const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
   const logGoogleUser = async () => {
     try {
       const response = await signInWithGooglePopup();
       const data = response.user;
       const { uid, displayName, email, photoURL } = data;
-      // console.log( uid, displayName, email, photoURL, "<<< RES USER");
 
       const user = await setDoc(
         doc(db, "Users", uid),
@@ -20,11 +19,14 @@ export const Login = () => {
           uid,
           displayName,
           email,
-          photoURL
+          photoURL,
         },
-        { merge: true }
+        { merge: true },
       );
 
+      localStorage.uid = uid;
+      localStorage.displayName = displayName;
+      localStorage.photoURL = photoURL;
       navigate("/home");
     } catch (error) {
       console.error(error);
@@ -33,19 +35,19 @@ export const Login = () => {
 
   return (
     <>
-      <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
-        <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
-          <form className="w-3/5 flex flex-col gap-3">
-            <div className="text-3xl md:text-md lg:text-4xl text-center"></div>
-            <h1 className="text-3xl md:text-md lg:text-5xl lg:font-serif text-center">
+      <main className="flex min-h-screen flex-col md:grid md:grid-cols-2">
+        <section className=" flex h-screen flex-col items-center justify-center bg-gray-800 text-white md:col-span-1">
+          <form className="flex w-3/5 flex-col gap-3">
+            <div className="md:text-md text-center text-3xl lg:text-4xl"></div>
+            <h1 className="md:text-md text-center text-3xl lg:font-serif lg:text-5xl">
               Login
             </h1>
-            <p className="text-sm lg:text-lg mb-5 mt-7">
+            <p className="mb-5 mt-7 text-sm lg:text-lg">
               <marquee>Please Input Your Own Information to Login</marquee>
             </p>
             <label className="text-sm lg:text-lg">Email :</label>
             <input
-              className="input input-sm lg:input-md input-bordered w-full invalid:border-error invalid:text-error
+              className="input input-sm input-bordered w-full lg:input-md invalid:border-error invalid:text-error
                 focus:invalid:border-error focus:invalid:ring-error"
               type="email"
               name="email"
@@ -54,28 +56,28 @@ export const Login = () => {
             />
             <label className="text-sm lg:text-lg">Password :</label>
             <input
-              className="input input-sm lg:input-md input-bordered w-full"
+              className="input input-sm input-bordered w-full lg:input-md"
               type="password"
               name="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="text-sm lg:text-md lg:hover:text-blue-500 lg:hover:underline text-end">
+            <p className="lg:text-md text-end text-sm lg:hover:text-blue-500 lg:hover:underline">
               Forgot password?
             </p>
-            <button className="btn btn-sm lg:btn-md btn-primary">Login</button>
+            <button className="btn btn-primary btn-sm lg:btn-md">Login</button>
             <div className="divider text-sm lg:text-lg">-- Or --</div>
             <button
               type="button"
               onClick={logGoogleUser}
               id="google-button"
-              className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+              className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-semibold text-gray-900 hover:bg-gray-100 focus:bg-gray-100"
             >
               <div className="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                   viewBox="0 0 48 48"
                 >
                   <defs>
@@ -115,7 +117,7 @@ export const Login = () => {
               <Link to={"/register"}>
                 <button
                   //   to="/login"
-                  className="text-primary link-hover text-sm lg:text-lg "
+                  className="link-hover text-sm text-primary lg:text-lg "
                 >
                   Register
                 </button>
@@ -123,45 +125,45 @@ export const Login = () => {
             </p>
           </div>
         </section>
-        <section className="text-white text-center hidden md:flex md:col-span-1 max-h-dvh bg-gray-900 bg-cover">
-          <div className="text-center h-full carousel carousel-vertical w-full flex opacity-50">
-            <div className="carousel-item relative w-full h-full">
+        <section className="hidden max-h-dvh bg-gray-900 bg-cover text-center text-white md:col-span-1 md:flex">
+          <div className="carousel carousel-vertical flex h-full w-full text-center opacity-50">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/2670898/pexels-photo-2670898.jpeg"
                 className="w-full object-cover"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/360912/pexels-photo-360912.jpeg"
                 className="w-full object-cover"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/54124/pexels-photo-54124.jpeg"
                 className="w-full object-cover text-center"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/1820563/pexels-photo-1820563.jpeg"
                 className="w-full object-cover"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/902756/pexels-photo-902756.jpeg"
                 className="w-full object-cover"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/20463592/pexels-photo-20463592/free-photo-of-the-cube.jpeg"
                 className="w-full object-cover"
               />
             </div>
-            <div className="carousel-item relative w-full h-full">
+            <div className="carousel-item relative h-full w-full">
               <img
                 src="https://images.pexels.com/photos/204946/pexels-photo-204946.jpeg"
                 className="w-full object-cover"
@@ -172,4 +174,4 @@ export const Login = () => {
       </main>
     </>
   );
-};
+}
