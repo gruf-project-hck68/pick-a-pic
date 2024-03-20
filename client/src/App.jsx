@@ -1,12 +1,95 @@
-// import { useState } from "react";
-// import { Register } from "./pages/Register";
-import {Login } from "./pages/Login"
-function App() {
+import { Layout } from "./components";
+import { Register } from "./pages"
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+  redirect,
+  Navigate,
+} from "react-router-dom";
+
+Layout
+const router = createBrowserRouter([
+  {
+    path:"*",
+    element: <Navigate to="/home" replace />,
+  },
+  {
+    path: "/register",
+    element: (
+      <>
+         <Register />
+      </>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <><p>LOGIN</p>
+        {/* <Login /> */}
+      </>
+    ),
+    // loader: () => {
+    //   if (localStorage.access_token) {
+    //     return redirect("/home");
+    //   }
+    //   return null;
+    // },
+  },
+  {
+    element: (
+      <>
+        <Layout />
+      </>
+    ),
+    // loader: () => {
+    //   if (!localStorage.access_token) {
+    //     return redirect("/login");
+    //   }
+    //   return null;
+    // },
+    children: [
+      {
+        path: "/home",
+        element: (
+          <>
+            {/* <Home /> */}
+          </>
+        ),
+      },
+      {
+        path: "/posts",
+        element: (
+          <>
+            {/* <Posts /> */}
+          </>
+        ),
+      },
+      {
+        path: "/my-posts",
+        element: (
+          <>
+            {/* <MyPosts /> */}
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/logout",
+    loader: () => {
+      localStorage.clear();
+      return redirect("/login");
+    },
+  },
+])
+
+function App() {
   return (
     <>
-    <Login/>
-      
+      <RouterProvider router={router} />      
     </>
   );
 }

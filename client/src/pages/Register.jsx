@@ -26,8 +26,6 @@ export const Register = () => {
       };
 
   return (
-    // <div>Register</div>
-
     <main className="min-h-screen flex flex-col md:grid md:grid-cols-2">
       <section className=" text-white h-screen md:col-span-1 bg-gray-800 flex flex-col justify-center items-center">
         <form onSubmit={handleLogin} className="w-3/5 flex flex-col gap-3">
@@ -125,4 +123,4 @@ export const Register = () => {
       </section>
     </main>
   );
-};
+}
