@@ -10,7 +10,7 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-      <div className={`flex lg:min-h-full w-full ${bgColor} h-dvh`}>
+      <div className={`flex lg:min-h-full w-full ${bgColor}`}>
         <Outlet />
       </div>
     </>
