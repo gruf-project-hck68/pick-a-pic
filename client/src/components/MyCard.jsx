@@ -1,42 +1,36 @@
 //
-import React, { useContext } from "react";
-import { SwalError, SwalSuccess } from "./Alert";
+import React, { useEffect, useState, useContext } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import Swal from "sweetalert2";
 import { ThemeContext } from "../context/ThemeContext";
-
-
-export default function MyCard({ picture, updatePictures }) {
-  const { id, imageUrl, pexelId, title, content, Comments } = picture;
-  // console.log(picture, "<< INI PICTURE");
-  const handleDelete = async () => {
-    try {
-      console.log(title, "<< title");
-      await deleteDoc(doc(db, "Posts", id)); 
-      updatePictures;
-      SwalSuccess(
-        "Success Delete",
-        `${title} Has Been Deleted From Your Collection`,
-      );
-    } catch (error) {
-      console.log(error, "<<<< ERR");
-      SwalError(error);
-    }
-  };
-
-  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
-  const bgColor = theme[currentTheme].bgColor;
-  const border = theme[currentTheme].border;
-//
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
 import CommentBox from "./CommentBox";
 
-export default function MyCard({ picture }) {
+export default function MyCard({ picture, updatePictures }) {
   const [comments, setComments] = useState([]);
   const { id, imageUrl, pexelId, title, content, Comments } = picture;
+
+  const handleDelete = async () => {
+    try {
+      await deleteDoc(doc(db, "Posts", id)); 
+      updatePictures(); // Panggil updatePictures sebagai fungsi
+      Swal.fire({
+        title: "Success Delete",
+        text: `${title} Has Been Deleted From Your Collection`,
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+    } catch (error) {
+      console.log(error, "<<<< ERR");
+      Swal.fire({
+        title: "Error!",
+        text: error.message || "Internal server error",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
+    }
+  };
 
   const fetchComments = () => {
     const q = query(
@@ -59,6 +53,10 @@ export default function MyCard({ picture }) {
     const unsubscribe = fetchComments();
     return unsubscribe;
   }, []);
+
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const border = theme[currentTheme].border;
+//
 
 //
 

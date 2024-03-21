@@ -141,11 +141,6 @@ const NavbarEnd = () => {
               </Link>
             </li>
             <li>
-              <Link to="/settings" className={`font-poppins text-lg ${text}`}>
-                Settings
-              </Link>
-            </li>
-            <li>
               <Link to="/logout" className={`font-poppins text-lg ${text}`}>
                 Logout
               </Link>
@@ -163,7 +158,7 @@ export default function Navbar() {
   const navBorder = theme[currentTheme].navBorder;
   return (
     <div
-      className={`navbar sticky top-0 z-10 border-b ${navBorder} ${bgColor}`}
+      className={`navbar sticky top-0 z-40 border-b ${navBorder} ${bgColor}`}
     >
       <NavbarStart />
       {/* <NavbarCenter /> */}
