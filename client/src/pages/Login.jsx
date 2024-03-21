@@ -39,6 +39,7 @@ export default function Login() {
       (localStorage.uid = currentUser.uid),
         (localStorage.displayName = currentUser.displayName),
         (localStorage.photoUrl = "Untitled");
+        (localStorage.email = currentUser.email);
       localStorage.access_token = currentUser.accessToken;
 
       navigate("/home");
@@ -107,10 +108,7 @@ export default function Login() {
               placeholder="Password"
               onChange={handleInputChange}
             />
-            <p className="lg:text-md text-end text-sm lg:hover:text-blue-500 lg:hover:underline">
-              Forgot password?
-            </p>
-            <button className="btn btn-primary btn-sm lg:btn-md">Login</button>
+            <button className="btn btn-primary btn-sm lg:btn-md mt-5">Login</button>
             <div className="divider text-sm lg:text-lg">-- Or --</div>
             <button
               type="button"
