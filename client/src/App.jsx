@@ -9,6 +9,7 @@ import {
   redirect,
   Navigate,
 } from "react-router-dom";
+import { UpdateProfile } from "./pages/UpdateProfile.jsx";
 MyCollection;
 
 const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/my-profile",
         element: <MyProfile />
+      },
+      {
+        path: "/update-profile",
+        element: <UpdateProfile />
       }
     ],
   },
