@@ -22,6 +22,10 @@ export const SwalError = (error) => {
     case "noContent":
       message = "Content is required";
       break;
+
+    case "fieldRequired":
+      message = "Please fill in both name and profile picture fields";
+      break;
   }
   Swal.fire({
     title: "Error!",

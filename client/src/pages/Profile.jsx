@@ -31,9 +31,8 @@ export const MyProfile = () => {
   const bgColor = theme[currentTheme].bgColor;
   return (
     <>
-      <>
         <div className="relative mx-auto mb-6 mt-36 w-full min-w-0 max-w-md break-words rounded-xl bg-white shadow-lg md:max-w-2xl">
-          <div className="px-6">
+          <div className="px-6 ">
             <div className="flex flex-wrap justify-center">
               <div className="flex w-full justify-center">
                 <div className="relative">
@@ -75,7 +74,6 @@ export const MyProfile = () => {
             </div>
           </div>
         </div>
-      </>
     </>
   );
 };
