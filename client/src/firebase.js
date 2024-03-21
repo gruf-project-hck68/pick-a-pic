@@ -24,6 +24,5 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
 export const auth = getAuth();
-console.log(typeof auth, "<< auth")
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 export const db = getFirestore(app);

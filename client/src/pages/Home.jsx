@@ -16,7 +16,6 @@ export default function Home() {
 
   const fetchPictures = async (initPage) => {
     try {
-      console.log("PAGE: " + initPage);
       const { next_page, page, per_page, photos } = await fetchPexelAPI(
         initPage,
         50,
@@ -28,16 +27,6 @@ export default function Home() {
     }
   };
 
-  const getUser = async () => {
-    try {
-      // const targetDocRef = await getDocs(collection(db, "Users"));
-      // targetDocRef.forEach((doc) => {
-      //   console.log(`${doc.id} => ${doc.data()}`);
-      // });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const loadPicture = () => {
     setInitPage((prev) => prev + 1);
@@ -46,7 +35,6 @@ export default function Home() {
 
   useEffect(() => {
     fetchPictures(initPage);
-    getUser();
   }, []);
 
   return (

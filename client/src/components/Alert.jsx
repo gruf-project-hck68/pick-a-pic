@@ -17,6 +17,10 @@ export const SwalError = (error) => {
       message = "Title is required";
       break;
 
+    case "noUser":
+      message = "User does not exist";
+      break;
+
     case "noContent":
       message = "Content is required";
       break;
@@ -27,6 +31,7 @@ export const SwalError = (error) => {
 
     case "downVoted":
       message = "already downvoted";
+      break;
 
     case "fieldRequired":
       message = "Please fill in both name and profile picture fields";

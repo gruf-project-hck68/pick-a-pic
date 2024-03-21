@@ -19,7 +19,6 @@ export const ThemeContext = createContext({
 
 export default function ThemeProvider({ children }) {
   const [currentTheme, setCurrentTheme] = useState("dark");
-  console.log(currentTheme, "<< INI THEMENYA");
   return (
     <ThemeContext.Provider
       value={{

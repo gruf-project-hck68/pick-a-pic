@@ -7,7 +7,6 @@ export const UserContext = createContext();
 export const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
   const user = localStorage.getItem('email') || ""
-  console.log(currentUser, "<< INI USER CONTEXT");
 
   return (
     <UserContext.Provider value={{ user, currentUser, setCurrentUser }}>

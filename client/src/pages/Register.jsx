@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword , updateProfile, getAuth} from "firebase/auth";
+import { SwalError } from "../components/Alert";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -27,15 +28,13 @@ export default function Register() {
     event.preventDefault();
     try {
       const { email, password, displayName } = input; 
-      console.log(input);
       const credential = await createUserWithEmailAndPassword(auth, email, password); // Gunakan nilai-nilai dari state input
       await updateProfile(credential.user, {
         displayName
       })
-      // console.log(auth.currentUser)
       navigate('/login'); 
     } catch (error) {
-      console.log(error);
+      SwalError(error)
     }
   };
 

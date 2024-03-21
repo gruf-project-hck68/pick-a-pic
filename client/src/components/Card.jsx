@@ -39,7 +39,6 @@ export default function Card({ picture }) {
   const addToCollection = async (e) => {
     e.preventDefault();
     try {
-      console.log(input);
       if (input.pexelId == "" || input.pexelId == 0) throw { name: "noImage" };
 
       if (input.title == "") throw { name: "noTitle" };
@@ -52,30 +51,15 @@ export default function Card({ picture }) {
         if (docData.pexelId === input.pexelId && '/Users/'+localStorage.uid === docData.user) {
           throw {name: 'DuplicateImage'}
         }
-        console.log(doc.id, " => ", doc.data());
       });
-      // const docRefGet = doc(db, "Posts", "ID3ZM6lVH6XI5kjIDeZ4");
-      // const docSnap = await getDoc(docRefGet);
-
-      // if (docSnap.exists()) {
-        
-      //   console.log("Document data:", docSnap.data());
-      // } else {
-      //   // docSnap.data() will be undefined in this case
-      //   console.log("No such document!");
-      // }
       const usersCollectionRef = doc(db, 'Users', localStorage.displayName);
       const usersCollectionRef1 = doc(db, 'Users', localStorage.uid);
       const usersCollectionRef2 = collection(db, 'Users');
 
-      console.log(usersCollectionRef);
-      console.log(usersCollectionRef1);
-      console.log(usersCollectionRef == usersCollectionRef1);
       const docRef = await addDoc(collection(db, "Posts"), input);
 
       input.id = docRef.id;
 
-      console.log("Document written with ID: ", docRef.id);
       SwalSuccess("Added", "Succes Add This Pict to Your Collection")
     } catch (e) {
       SwalError(e);

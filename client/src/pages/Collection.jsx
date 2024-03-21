@@ -51,12 +51,12 @@ export default function Collection() {
   const border = theme[currentTheme].border;
 
   return (
-    <content
+    <div
       className={`flex ${bgColor} w-full flex-wrap items-center justify-center gap-5 py-2 lg:justify-evenly`}
     >
       {pictures?.map((picture, index) => (
         <CollectionCard picture={picture} key={`${index}${picture.id}`} />
       ))}
-    </content>
+    </div>
   );
 }

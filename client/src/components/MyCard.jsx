@@ -22,7 +22,6 @@ export default function MyCard({ picture }) {
 
   const handleDelete = async () => {
     try {
-      console.log(title, "<< title");
       await deleteDoc(doc(db, "Posts", id));
       SwalSuccess(
         "Success Delete",

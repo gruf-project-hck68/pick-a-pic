@@ -21,7 +21,6 @@ export const UpdateProfile = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // console.log(value, "<<>>>", name);
     const newInput = {
       ...input,
       [name]: value,

@@ -43,7 +43,7 @@ export default function Login() {
 
       navigate("/home");
     } catch (error) {
-      console.log(error);
+      SwalError(error);
     }
   };
 
@@ -68,8 +68,7 @@ export default function Login() {
       localStorage.photoURL = photoURL;
       localStorage.access_token = accessToken;
 
-      console.log(user, "<<< DATA");
-      SwalSuccess("Login successful", `Welcome ${displayName}`)
+      SwalSuccess("Login successful", `Welcome ${displayName}`);
       navigate("/home");
     } catch (error) {
       SwalError(error);
