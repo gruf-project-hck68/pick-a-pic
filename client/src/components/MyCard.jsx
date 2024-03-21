@@ -1,4 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { db } from "../firebase";
+import { ThemeContext } from "../context/ThemeContext";
+import CommentBox from "./CommentBox";
 import { SwalError, SwalSuccess } from "./Alert";
 import {
   deleteDoc,
@@ -9,9 +12,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { ThemeContext } from "../context/ThemeContext";
-import CommentBox from "./CommentBox";
-import { db } from "../firebase";
 
 export default function MyCard({ picture }) {
   const { id, imageUrl, pexelId, title, content, Comments } = picture;
@@ -54,8 +54,6 @@ export default function MyCard({ picture }) {
     const unsubscribe = fetchComments();
     return unsubscribe;
   }, []);
-
-  //
 
   return (
     <div

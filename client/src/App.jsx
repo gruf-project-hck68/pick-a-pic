@@ -1,5 +1,5 @@
 import { Layout } from "./components";
-import { Home, Register, Login, Collection, MyCollection } from "./pages";
+import { Home, Register, Login, Collection, MyCollection, MyProfile } from "./pages";
 import ThemeProvider from "./context/ThemeContext.jsx";
 import {
   createBrowserRouter,
@@ -51,6 +51,10 @@ const router = createBrowserRouter([
         path: "/my-collections",
         element: <MyCollection />,
       },
+      {
+        path: "/my-profile",
+        element: <MyProfile />
+      }
     ],
   },
   {

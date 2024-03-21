@@ -9,6 +9,7 @@ export default function MyCollection() {
   const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
   const bgColor = theme[currentTheme].bgColor;
   const border = theme[currentTheme].border;
+  
   const fetchMyCollection = () => {
     const unsubscribeFns = [];
     const q = query(
@@ -22,7 +23,7 @@ export default function MyCollection() {
         picture.id = doc.id;
         collections.push(picture);
       });
-      setMyPictures(collections);
+      setMyPictures(pictures);
     });
     unsubscribeFns.push(myCollection);
     return () => unsubscribeFns.forEach((fn) => fn());
@@ -43,6 +44,7 @@ export default function MyCollection() {
           key={`${index}${picture.id}`}
         />
       ))}
-    </div>
+    </content>
+    </>
   );
 }
