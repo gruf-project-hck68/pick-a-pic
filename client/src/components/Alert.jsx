@@ -11,8 +11,6 @@ export const SwalSuccess = (success_title, success_message) => {
 
 export const SwalError = (error) => {
   let message = error.message || "Internal server error";
-  console.log(error)
-  console.log(error.message)
 
   switch (error.name) {
     case "noTitle":
@@ -22,6 +20,13 @@ export const SwalError = (error) => {
     case "noContent":
       message = "Content is required";
       break;
+
+    case "upVoted":
+      message = "already upvoted";
+      break;
+
+    case "downVoted":
+      message = "already downvoted";
 
     case "fieldRequired":
       message = "Please fill in both name and profile picture fields";
