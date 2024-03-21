@@ -36,7 +36,7 @@ export default function MyCollection() {
 
   return (
     <div
-      className={`flex w-full flex-wrap items-center ${bgColor} justify-center gap-5 py-2 lg:justify-evenly`}
+      className={`flex w-full flex-wrap items-center ${bgColor} justify-center gap-5 py-2 lg:justify-evenly h-max`}
     >
       {myPictures?.map((picture, index) => (
         <MyCard picture={picture} key={`${index}${picture.id}`} />

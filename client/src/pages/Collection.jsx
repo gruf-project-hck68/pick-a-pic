@@ -52,7 +52,7 @@ export default function Collection() {
 
   return (
     <div
-      className={`flex ${bgColor} w-full flex-wrap items-center justify-center gap-5 py-2 lg:justify-evenly`}
+      className={`flex ${bgColor} w-full flex-wrap items-center justify-center gap-5 py-2 lg:justify-evenly h-max`}
     >
       {pictures?.map((picture, index) => (
         <CollectionCard picture={picture} key={`${index}${picture.id}`} />
