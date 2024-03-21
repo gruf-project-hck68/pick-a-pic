@@ -1,5 +1,12 @@
 import { Layout } from "./components";
-import { Home, Register, Login, Collection, MyCollection, MyProfile } from "./pages";
+import {
+  Home,
+  Register,
+  Login,
+  Collection,
+  MyCollection,
+  MyProfile,
+} from "./pages";
 import ThemeProvider from "./context/ThemeContext.jsx";
 import {
   createBrowserRouter,
@@ -13,6 +20,10 @@ import { UpdateProfile } from "./pages/UpdateProfile.jsx";
 MyCollection;
 
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+  },
   {
     path: "/register",
     element: <Register />,
@@ -54,12 +65,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-profile",
-        element: <MyProfile />
+        element: <MyProfile />,
       },
       {
         path: "/update-profile",
-        element: <UpdateProfile />
-      }
+        element: <UpdateProfile />,
+      },
     ],
   },
   {

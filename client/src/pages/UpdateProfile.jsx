@@ -42,7 +42,7 @@ export const UpdateProfile = () => {
 
   return (
     <>
-      <div className="relative mx-auto mb-6 mt-36 w-full min-w-0 max-w-md break-words rounded-xl bg-white shadow-lg md:max-w-2xl">
+      <div className="relative mx-auto mb-6 mt-36 w-full min-w-0 max-w-md break-words rounded-xl bg-white shadow-lg md:max-w-2xl max-h-[50%]">
         <div className="px-6">
           <form onSubmit={handleUpdateProfile}>
             <div className="flex flex-wrap justify-center">
