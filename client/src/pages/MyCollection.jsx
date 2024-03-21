@@ -23,7 +23,7 @@ export default function MyCollection() {
         picture.id = doc.id;
         collections.push(picture);
       });
-      setMyPictures(pictures);
+      setMyPictures(collections);
     });
     unsubscribeFns.push(myCollection);
     return () => unsubscribeFns.forEach((fn) => fn());
@@ -44,7 +44,6 @@ export default function MyCollection() {
           key={`${index}${picture.id}`}
         />
       ))}
-    </content>
-    </>
+    </div>
   );
 }
