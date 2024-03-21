@@ -44,7 +44,7 @@ export default function CollectionCard({ picture }) {
 
   return (
     <div className={`group flex h-[52rem] min-h-72 w-[95%] overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-[48%] lg:max-w-[48%]`}>
-      <div className="relative w-1/2 border-e">
+      <div className={`relative w-1/2 ${border} border-e`}>
         <div className="absolute hidden h-full w-full items-center justify-center bg-gradient-to-t from-black to-[150%] py-5 group-hover:flex">
           <div className="flex w-4/5 flex-col items-center gap-5">
             <p className="text-2xl font-semibold">{title}</p>
