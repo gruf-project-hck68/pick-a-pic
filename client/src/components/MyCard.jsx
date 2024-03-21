@@ -1,42 +1,37 @@
-//
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase";
-import Swal from "sweetalert2";
+import {
+  deleteDoc,
+  doc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { ThemeContext } from "../context/ThemeContext";
+import CommentBox from "./CommentBox";
+import { db } from "../firebase";
 
-
-export default function MyCard({ picture, updatePictures }) {
+export default function MyCard({ picture }) {
   const { id, imageUrl, pexelId, title, content, Comments } = picture;
-  // console.log(picture, "<< INI PICTURE");
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const [comments, setComments] = useState([]);
+  const bgColor = theme[currentTheme].bgColor;
+  const border = theme[currentTheme].border;
+
   const handleDelete = async () => {
     try {
       console.log(title, "<< title");
-      await deleteDoc(doc(db, "Posts", id)); 
-      updatePictures;
+      await deleteDoc(doc(db, "Posts", id));
       SwalSuccess(
         "Success Delete",
         `${title} Has Been Deleted From Your Collection`,
       );
     } catch (error) {
-      console.log(error, "<<<< ERR");
       SwalError(error);
     }
   };
-
-  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
-  const bgColor = theme[currentTheme].bgColor;
-  const border = theme[currentTheme].border;
-//
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
-import CommentBox from "./CommentBox";
-
-export default function MyCard({ picture }) {
-  const [comments, setComments] = useState([]);
-  const { id, imageUrl, pexelId, title, content, Comments } = picture;
 
   const fetchComments = () => {
     const q = query(
@@ -60,11 +55,13 @@ export default function MyCard({ picture }) {
     return unsubscribe;
   }, []);
 
-//
+  //
 
   return (
-    <div className={`group flex h-[36rem] min-h-72 w-4/5 overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-1/2 lg:max-w-[40%]`}>
-      <div className="relative w-1/2 border-e">
+    <div
+      className={`group flex h-[36rem] min-h-72 w-4/5 overflow-clip rounded-xl border ${border} bg-base-100 shadow-xl lg:card-side lg:max-h-[36rem] lg:w-1/2 lg:max-w-[40%]`}
+    >
+      <div className={`relative w-1/2 ${border} border-e`}>
         <div className="absolute hidden h-full w-full items-center justify-center bg-gradient-to-t from-black from-[-70%] to-[150%] py-5 group-hover:flex">
           <div className="flex w-4/5 flex-col items-center gap-5">
             <p className="text-2xl font-semibold">{title}</p>
@@ -86,20 +83,23 @@ export default function MyCard({ picture }) {
 
       <div className="bottom-0 flex w-1/2 max-w-[50%] flex-col justify-between">
         <div className="flex h-[92%] flex-col items-center px-5 pt-5">
-          <p className="sticky top-0 mb-3 w-full bg-inherit text-center text-xl font-semibold">
+          <p className={`sticky top-0 mb-3 w-full bg-inherit text-center text-xl font-semibold`}>
             Comment
           </p>
-          <div className="overflow-clip text-pretty hover:overflow-auto">
+          <div className="overflow-clip text-pretty hover:overflow-auto w-full">
             {comments?.map((el, index) => {
-            return (
-              <p className="my-2 line-clamp-2 hover:line-clamp-none" key={index}>
-                {el.comment}
-              </p>
-            );
-          })}
+              return (
+                <p
+                  className={`my-2 line-clamp-2 hover:line-clamp-none`}
+                  key={index}
+                >
+                  {el.comment}
+                </p>
+              );
+            })}
           </div>
         </div>
-        <CommentBox id={id}/>
+        <CommentBox id={id} />
       </div>
     </div>
   );
