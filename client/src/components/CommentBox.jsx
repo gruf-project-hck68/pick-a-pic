@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SwalError, SwalSuccess } from "./Alert";
 import { CiLocationArrow1 } from "react-icons/ci";
 import {
@@ -7,13 +7,16 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function CommentBox({ id }) {
+  const { theme, currentTheme, setCurrentTheme } = useContext(ThemeContext);
+  const bgColor = theme[currentTheme].bgColor;
+  const border = theme[currentTheme].border;
   const [input, setInput] = useState({
     comment: "",
     user: "/Users/" + localStorage.uid,
   });
-
   const submitComment = async (e) => {
     e.preventDefault();
     try {
@@ -36,7 +39,7 @@ export default function CommentBox({ id }) {
 
   return (
     <form
-      className="flex justify-between rounded-br-lg border-t"
+      className={`flex justify-between rounded-br-lg ${border} border-t ${bgColor}`}
       onSubmit={submitComment}
     >
       <input
@@ -46,7 +49,7 @@ export default function CommentBox({ id }) {
         value={input.comment}
         onChange={handleComment}
       />
-      <div className="flex items-center justify-center rounded-br-xl border-s">
+      <div className={`flex items-center justify-center rounded-br-xl ${border} border-s`}>
         <button>
           <CiLocationArrow1 className="w-12 text-3xl font-bold text-primary" />
         </button>

@@ -64,7 +64,7 @@ export default function CollectionCard({ picture }) {
           <p className="sticky top-0 mb-3 w-full bg-inherit text-center text-xl font-semibold">
             Comment
           </p>
-          <div className="overflow-clip text-pretty hover:overflow-auto">
+          <div className="overflow-clip text-pretty hover:overflow-auto w-full">
             {comments?.map((el, index) => {
               return (
                 <p
