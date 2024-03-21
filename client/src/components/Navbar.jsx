@@ -123,7 +123,7 @@ const NavbarEnd = () => {
               <img
                 className="w-12 object-cover"
                 alt={localStorage.displayName ? localStorage.displayName : "NoName"}
-                src={localStorage.photoURL ? localStorage.photoURL.split("=")[0] + "photo.jpg" : "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg"}
+                src={localStorage.photoURL ? localStorage.photoURL : "https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg"}
               />
             </div>
           </div>
